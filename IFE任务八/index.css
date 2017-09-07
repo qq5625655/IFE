@@ -1,0 +1,63 @@
+*{
+	padding: 0px;
+	margin: 0px;
+} 
+.container{
+  padding: 10px;
+}
+.row{
+  clear: both;
+}	/*content-box，border和padding不计算入width之内
+	padding-box，padding计算入width内
+	border-box，border和padding计算入width之内，其实就是怪异模式了~*/
+
+
+/*	col-xs- 超小屏幕 手机 (<768px)
+.col-sm- 小屏幕 平板 (≥768px)
+.col-md- 中等屏幕 桌面显示器 (≥992px)
+.col-lg- 大屏幕 大桌面显示器 (≥1200px)*/
+[class*='col-']{
+	height: 50px;
+	margin:  10px;
+	box-sizing: border-box;
+	float: left;
+	background-color: #eee;
+	border:  1px solid #999;
+	font-size: 12px;
+	text-align: center;
+	line-height: 50px; 
+}
+ @media screen and (min-width: 768px){
+ 	.col-md-1{
+		width: calc(8.333% - 20px);
+ 	}
+ 	.col-md-2{
+ 		width: calc(16.666% - 20px);
+ 	}
+ 	.col-md-3{
+ 		width: calc(25% - 20px);
+ 	}
+ 	.col-md-4{
+ 		width: calc(33.333% - 20px);
+ 	}
+ 	.col-md-6{
+		width: calc(50% - 20px);
+ 	}
+ }
+ @media screen and (max-width: 768px) {
+ 	.col-sm-2{
+		width: calc(16.666% - 20px);
+ 	}
+ 	.col-sm-3{
+ 		width: calc(25% -20px);
+ 	}
+ 	.col-sm-6{
+		width: calc(50% - 20px);
+ 	}
+ 	.col-sm-8{
+ 		width: calc(66.666% - 20px);
+ 	}
+ 	.col-sm-12{
+ 		width: calc(100% - 20px);
+ 	}
+ }
