@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>IFE任务二十</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .textarea {
+            height: 100px;
+            width: 140px;
+        }
+        
+        #div {
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+        }
+        
+        #div div {
+            background-color: pink;
+            height: 30px;
+            line-height: 30px;
+            min-width: 30px;
+            text-align: center;
+            margin: 5px;
+        }
+        
+        #div span {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <textarea id="textarea" class="textarea" placeholder="请输入字符并使用不同的符号进行分割"></textarea>
+    <button id="insert">插入</button>
+    <button id="queryButton">查询</button>
+    <input id="input">
+    <div id="div"></div>
+    <script type="text/javascript" src="task.js"></script>
+</body>
+
+</html>
