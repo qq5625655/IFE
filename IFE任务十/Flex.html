@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .flex {
+            height: 600px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .flex>div {
+            width: 150px;
+            border: 1px solid red;
+            /* margin: auto; */
+            padding: 20px;
+            /* align-content: center;
+            align-items: center; */
+        }
+        
+        .flex-item1 {
+            height: 120px;
+        }
+        
+        .flex-item2 {
+            height: 100px;
+        }
+        
+        .flex-item3 {
+            height: 40px;
+        }
+        
+        .flex-item4 {
+            /* border: 1px solid blue; */
+            height: 200px;
+            border: 1px solid blue!important;
+        }
+        
+        @media all and (max-width: 640px) {
+            .flex {
+                flex-wrap: wrap;
+            }
+            .flex-item4 {
+                order: -1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="flex">
+        <div class="flex-item1">1</div>
+        <div class="flex-item2">2</div>
+        <div class="flex-item3">3</div>
+        <div class="flex-item4">4</div>
+    </div>
+
+</body>
+
+</html>
