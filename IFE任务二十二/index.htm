@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <style>
+        #flex-item {
+            display: flex;
+            padding: 20px;
+            width: 1000px;
+            height: 300px;
+            margin: 100px auto;
+            border: 1px solid black;
+            justify-content: space-between;
+            background-color: rgb(255, 255, 255);
+        }
+        
+        #flex-item-1,
+        #flex-item-2 {
+            border: 1px solid red;
+            width: 440px;
+            height: 260px;
+            justify-content: space-between;
+            display: flex;
+            padding: 20px;
+            background-color: rgb(255, 255, 255);
+        }
+        
+        #itemchild-1,
+        #itemchild-2 {
+            border: 1px solid blue;
+            height: 240px;
+            width: 180px;
+            padding: 10px;
+            display: flex;
+            justify-content: space-between;
+            background-color: rgb(255, 255, 255);
+        }
+        
+        #itemchild-1>div,
+        #itemchild-2>div {
+            border: 1px solid green;
+            height: 230px;
+            width: 80px;
+            background-color: rgb(255, 255, 255);
+        }
+        
+        button {
+            margin-left: 10px;
+            height: 30px;
+            width: 60px;
+            border-radius: 5px;
+            background-color: rgb(255, 255, 255);
+        }
+    </style>
+</head>
+
+<body>
+    <div id="flex-item">
+        <div id="flex-item-1">
+            <div id="itemchild-1">
+                <div id="child1"></div>
+                <div id="child2"></div>
+            </div>
+            <div id="itemchild-1">
+                <div id="child3"></div>
+                <div id="child4"></div>
+            </div>
+        </div>
+        <div id="flex-item-2">
+            <div id="itemchild-2">
+                <div id="child5"></div>
+                <div id="child6"></div>
+            </div>
+            <div id="itemchild-2">
+                <div id="child7"></div>
+                <div id="child8"></div>
+            </div>
+        </div>
+    </div>
+    <button id="pre">前序</button>
+    <button id="in">中序</button>
+    <button id="post">后序</button>
+
+    <script src="task.js"></script>
+</body>
+
+</html>
