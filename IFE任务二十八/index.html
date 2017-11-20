@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0px;
+            padding: 0px;
+        }
+        
+        body {
+            width: 100%;
+            height: 100%;
+            background-color: #02071d;
+            min-width: 1280px;
+        }
+        
+        .background {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .background .planet-1 {
+            top: 450px;
+            left: 300px;
+            background: #d9e6cd;
+            overflow: hidden;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .background .planet-2 {
+            position: absolute;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            top: 150px;
+            right: 350px;
+            background-color: #11a4c6;
+            overflow: hidden;
+        }
+        
+        .background .planet-3 {
+            position: absolute;
+            top: 450px;
+            right: 300px;
+            background-color: #f5a83e;
+            overflow: hidden;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+        }
+        
+        .background .planet-4 {
+            top: 50px;
+            left: 300px;
+            background-color: #f5a83e;
+            overflow: hidden;
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+        
+        .rotating {
+            animation: rotating 15s infinite;
+        }
+        
+        @keyframes rotating {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .hote-1 {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: #c83b38;
+            position: relative;
+            top: 40px;
+            left: 50px;
+        }
+        
+        .hote-2 {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #c83b38;
+            position: relative;
+            top: 80px;
+            left: 90px;
+        }
+        
+        .background .hole-4 {
+            position: absolute;
+            width: 15px;
+            height: 15px;
+            background-color: #cbd1c6;
+            border-radius: 50%;
+            top: 20px;
+            left: 20px;
+        }
+        
+        .background .hole-5 {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #999b8d;
+            border-radius: 50%;
+            top: 10px;
+            left: -5px;
+        }
+        
+        .shipsname {
+            height: 300px;
+            width: 290px;
+            border: 1px solid gray;
+            padding: 10px;
+            float: left;
+            background-color: hsla(0, 0%, 100%, .1);
+            color: #bdbdbd;
+            font-size: 14px;
+        }
+        
+        .shipsname label {
+            width: 282px;
+            display: inline-block;
+            height: 25px;
+        }
+        
+        .main-content {
+            position: absolute;
+            top: 5%;
+            left: 25%;
+        }
+        
+        .space-background {
+            width: 600px;
+            height: 600px;
+            position: relative;
+        }
+        
+        .planet,
+        .orbite1,
+        .orbite2,
+        .orbite3,
+        .orbite4,
+        .craft-model-1,
+        .craft-model-2,
+        .craft-model-3,
+        .craft-model-4 {
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            bottom: 0px;
+            right: 0px;
+            margin: auto;
+        }
+        
+        .planet {
+            background-color: #ec5d4a;
+            width: 200px;
+            height: 200px;
+            border-radius: 100%;
+        }
+        
+        .orbite-1,
+        .orbite-2,
+        .orbite-3,
+        .orbite-4 {
+            border-radius: 50%;
+            border: 2px solid #3e4059;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .orbite1 {
+            width: 300px;
+            height: 300px;
+            position: absolute;
+        }
+        
+        .orbite2 {
+            width: 400px;
+            height: 400px;
+            position: absolute;
+        }
+        
+        .orbite3 {
+            width: 500px;
+            height: 500px;
+            position: absolute;
+        }
+        
+        .orbite4 {
+            width: 600px;
+            height: 600px;
+            position: absolute;
+        }
+        
+        .craft-model-1 {
+            width: 305px;
+            height: 40px;
+        }
+        
+        .craft-model-2 {
+            width: 405px;
+            height: 40px;
+        }
+        
+        .craft-model-3 {
+            width: 505px;
+            height: 40px;
+        }
+        
+        .craft-model-4 {
+            width: 605px;
+            height: 40px;
+        }
+        
+        .craft-inner {
+            float: right;
+            position: relative;
+            width: 20px;
+            height: 40px;
+            border-radius: 10px;
+            background-color: #d9e6cd;
+            text-align: center;
+            overflow: hidden;
+        }
+        
+        .enegry-text {
+            display: block;
+            position: relative;
+            line-height: 50px;
+            font-size: 12px;
+            z-index: 9;
+            color: black;
+            transform: rotate(-90deg);
+        }
+        
+        .enegry {
+            width: 100%;
+            height: 100%;
+            background-color: #2fa06c;
+            position: absolute;
+            bottom: 0px;
+            z-index: 0;
+        }
+        
+        #ship-buttons {
+            color: #11a4c6;
+            float: left;
+            margin-left: 50px;
+            height: 176px;
+            border-right: 2px dotted #3b3f58;
+            padding: 20px 20px 0px 0px;
+        }
+        
+        #ship-buttons #control-0 input,
+        #control-1 input,
+        #control-2 input,
+        #control-3 input {
+            margin-left: 10px;
+        }
+        
+        #ship-buttons [id^=control] {
+            margin-top: 10px;
+        }
+        
+        .control-area textarea {
+            width: 100%;
+            border-top: 0px;
+        }
+        
+        .control-area {
+            position: absolute;
+            top: 650px;
+            width: 100%;
+            border: 2px dotted #3b3f58;
+        }
+        
+        .control-area .text label {
+            color: #11a4c6;
+        }
+        
+        .text {
+            float: right;
+            width: 40%;
+            margin-right: 30px;
+        }
+        
+        .list {
+            border: 1px solid gray;
+            background-color: hsla(0, 0%, 100%, .1);
+            font-size: 14px;
+            color: white;
+            overflow: auto;
+            height: 150px;
+        }
+        
+        .monitor {
+            float: right;
+            color: black;
+            text-align: center;
+            font-size: 13px;
+            border-collapse: collapse;
+            background-color: hsla(0, 0%, 100%, .1);
+            border-bottom: 1px solid #bbb;
+        }
+        
+        .monitor thead {
+            background: #bbb;
+        }
+        
+        .monitor th {
+            padding: 5px 10px;
+        }
+        
+        .monitor td {
+            color: white;
+            border: 1px solid white;
+            padding: 7px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="background">
+        <div class="shipsname">
+            <div>
+                <span>动力系统：</span>
+
+            </div>
+            <div class="qianjin">
+                <label>
+                    <input type="radio" name="powerType" checked value="2" >
+                    <span>前进号</span>(速率30px/s，能耗5%/s)
+                </label>
+                <label>
+                    <input type="radio" name="powerType" value="3">
+                    <span>奔腾号</span>(速率50px/s，能耗7%/s)
+                </label>
+                <label>
+                    <input type="radio" name="powerType" value="4">
+                     <span>超越号</span>(速率80px/s，能耗9%/s)
+                </label>
+                <label>
+                    <input type="radio" name="powerType" value="5">
+                    <span>核动力号</span>(速率200px/s，能耗10%/s)
+                </label>
+                <label>
+                    <input type="radio" name="powerType" value="6" >
+                    <span>光速号</span>(速率500px/s，能耗12%/s)
+                </label>
+                <label>
+                    <input type="radio" name="powerType" value="7">
+                    <span>前进号</span>(速率1000px/s，能耗14%/s)
+                 </label>
+
+            </div>
+            <div>
+                <span>能源系统</span>
+            </div>
+            <div class="jinneng">
+                <label>
+                    <input type="radio" name="energyType" checked value="2">
+                    <span>劲量型</span> (补充能源速度2%/s)
+                </label>
+                <label>
+                    <input type="radio" name="energyType"  value="4">
+                    <span>光能型</span>(补充能源速度4%/s)
+                </label>
+                <label>
+                    <input type="radio" name="energyType"  value="6">
+                    <span>永久型</span>(补充能源速度6%/s)
+                </label>
+                <label>
+                    <input type="radio" name="energyType" value="20">
+                    <span>外挂型</span>(补充能源速度20%/s)
+                </label>
+            </div>
+        </div>
+
+        <table class="monitor">
+            <thead>
+                <tr>
+                    <th>飞船</th>
+                    <th>动力系统</th>
+                    <th>能源系统</th>
+                    <th>当前飞行状态</th>
+                    <th>剩余能量</th>
+                </tr>
+            </thead>
+
+        </table>
+
+        <div class="planet-1 rotating">
+            <div class="hole-4"></div>
+            <div class="hole-5"></div>
+        </div>
+        <div class="planet-2 rotating">
+            <div class="hole-4"></div>
+            <div class="hole-5"></div>
+        </div>
+        <div class="planet-3 rotating">
+            <div class="hole-4"></div>
+            <div class="hole-5"></div>
+        </div>
+        <div class="planet-4 rotating">
+            <div class="hole-4"></div>
+            <div class="hole-5"></div>
+        </div>
+
+    </div>
+    <section>
+        <div class="main-content">
+            <div class="space-background">
+                <div class="planet">
+                    <div class="hote-1"></div>
+                    <div class="hote-2"></div>
+                </div>
+                <div class="orbite1">
+                    <div class="orbite-1"></div>
+                    <div class="craft-model-1" id="craft-1">
+
+                    </div>
+                </div>
+                <div class="orbite2">
+                    <div class="orbite-2"></div>
+                    <div class="craft-model-2" id="craft-2"></div>
+                </div>
+                <div class="orbite3">
+                    <div class="orbite-3"></div>
+                    <div class="craft-model-3" id="craft-3"></div>
+                </div>
+                <div class="orbite4">
+                    <div class="orbite-4"></div>
+                    <div class="craft-model-4" id="craft-4"></div>
+                </div>
+            </div>
+        </div>
+        <div class="control-area">
+            <div id="ship-buttons">
+                <input onclick="Commander.launch()" id="button" type="button" value="新的飞船起飞">
+            </div>
+
+            <div class="text">
+
+                <label for="logs">输出日志</label>
+                <div class="list" id="list">
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="task.js"></script>
+</body>
+
+</html>
