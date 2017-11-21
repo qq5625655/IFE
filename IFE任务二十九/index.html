@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        form {
+            margin: 120px;
+        }
+        
+        div {
+            margin: 0 auto;
+            height: 50px;
+            width: 100%;
+        }
+        
+        label {
+            font-size: 24px;
+            font-family: "微软雅黑";
+        }
+        
+        label .text {
+            width: 195px;
+            height: 25px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        
+        label .button {
+            height: 35px;
+            width: 65px;
+            background: #2F79BA;
+            border: 1px;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        label p {
+            margin-top: 0px;
+            font-size: 16px;
+            color: #a8a8a8;
+        }
+    </style>
+</head>
+
+<body>
+    <form action="">
+        <div>
+            <label for="name">
+            姓名
+                <input type="text" class="text">
+                <input type="button" value="验证"  class="button">
+                <p>必填，长度为4~16个字符。</p>
+            </label>
+
+        </div>
+    </form>
+    <script>
+        var input = document.getElementsByClassName("text")[0];
+        var button = document.getElementsByClassName("button")[0];
+
+        button.addEventListener("click", function() {
+            if (chkstrlen(input.value) === 0) {
+                input.style.border = "1px solid red";
+                button.nextElementSibling.innerHTML = "姓名不能为空!";
+                button.nextElementSibling.style.color = "red";
+            } else if (chkstrlen(input.value) < 4 || chkstrlen(input.value) > 16) {
+                input.style.border = "1px solid red";
+                button.nextElementSibling.innerHTML = "请输入4~16位字符!";
+                button.nextElementSibling.style.color = "red";
+            } else {
+                input.style.border = "1px solid green";
+                button.nextElementSibling.innerHTML = "格式正确!";
+                button.nextElementSibling.style.color = "green";
+            }
+        })
+
+        //使用Unicode编码来判断是否有中文
+        function chkstrlen(str) {
+            var strlen = 0;
+            for (var i = 0; i < str.length; i++) {
+                if (str.charCodeAt(i) > 255) {
+                    strlen += 2;
+                } else {
+                    strlen++;
+                }
+            }
+            return strlen;
+        }
+    </script>
+</body>
+
+</html>
