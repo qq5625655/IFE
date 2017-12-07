@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <style>
+        * {
+            padding: 0px;
+            margin: 0px;
+            font-family: '微软雅黑';
+        }
+        
+        .tableli {
+            margin: 0 auto;
+            width: 300px;
+            height: 300px;
+        }
+        
+        .tableli label {
+            font-size: 18px;
+            margin-top: 10px;
+            display: block;
+            height: 60px;
+            width: 500px;
+        }
+        
+        .tableli input {
+            height: 25px;
+            width: 200px;
+            margin-left: 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        
+        .tableli label span {
+            display: block;
+            font-size: 14px;
+            color: #ccc;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<h3>表单生成器</h3>
+<section id="table">
+    <label for=""><input type="checkbox" name="check" id = "nameList" value="姓名">姓名</label>
+    <label for=""><input type="checkbox" name="check" id = "passwordList" value="密码">密码</label>
+    <label for=""><input type="checkbox" name="check" id = "emailList" value="邮箱">邮箱</label>
+    <label for=""><input type="checkbox" name="check" id = "phoneList" value="手机">手机</label>
+</section>
+<section>
+    <label for=""><input type="radio" value="样式一" name="radio" id = "style1">样式一</label>
+    <label for=""><input type="radio" value="样式二" name="radio" id="style2">样式二</label>
+</section>
+<button id="tableBtn">生成表单</button>
+<section id="tableli" class="tableli">
+
+</section>
+
+<body>
+    <script src="task.js"></script>
+</body>
+
+</html>
