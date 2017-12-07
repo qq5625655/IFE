@@ -6,26 +6,35 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        form {
-            margin: 120px;
-        }
-        
         div {
+            width: 320px;
+            height: 72px;
             margin: 0 auto;
-            height: 50px;
-            width: 100%;
         }
         
         label {
-            font-size: 24px;
             font-family: "微软雅黑";
         }
         
-        label .text {
+        label strong {
+            display: inline-block;
+            margin-right: 21px;
+        }
+        
+        div:nth-child(3) strong {
+            margin-left: -25px;
+        }
+        
+        label input {
             width: 195px;
             height: 25px;
             border: 1px solid #ccc;
             border-radius: 5px;
+        }
+        
+        label span {
+            display: block;
+            font-size: 14px;
         }
         
         label .button {
@@ -36,60 +45,372 @@
             color: white;
             border-radius: 5px;
             cursor: pointer;
+            margin-left: 800px;
         }
         
         label p {
-            margin-top: 0px;
+            margin-top: 5px;
             font-size: 16px;
             color: #a8a8a8;
+            display: none;
         }
     </style>
 </head>
 
 <body>
-    <form action="">
+    <form id="form" action="">
+        <!-- <div>
+            <label for="name">
+            <strong>姓名</strong>
+                <input type="text" class="text">
+                <p></p>
+            </label>
+        </div>
         <div>
             <label for="name">
-            姓名
-                <input type="text" class="text">
-                <input type="button" value="验证"  class="button">
-                <p>必填，长度为4~16个字符。</p>
-            </label>
-
+                <strong>密码</strong>
+                    <input type="password" class="text">
+                    <p></p>
+                </label>
         </div>
+        <div>
+            <label for="name">
+                <strong>密码确认</strong>
+                    <input type="password" class="text">
+                    <p></p>
+                </label>
+        </div>
+        <div>
+            <label for="name">
+                <strong>邮箱</strong>
+                    <input type="text" class="text">
+                    <p></p>
+                </label>
+        </div>
+        <div>
+            <label for="name">
+                <strong>手机号码</strong>
+                    <input type="text" class="text">
+                    <p></p>
+                </label>
+        </div> -->
+        <label for="">
+            <input type="button" value="提交" class="button">
+        </label>
+
     </form>
     <script>
-        var input = document.getElementsByClassName("text")[0];
-        var button = document.getElementsByClassName("button")[0];
+        //浏览器兼容事件
 
-        button.addEventListener("click", function() {
-            if (chkstrlen(input.value) === 0) {
-                input.style.border = "1px solid red";
-                button.nextElementSibling.innerHTML = "姓名不能为空!";
-                button.nextElementSibling.style.color = "red";
-            } else if (chkstrlen(input.value) < 4 || chkstrlen(input.value) > 16) {
-                input.style.border = "1px solid red";
-                button.nextElementSibling.innerHTML = "请输入4~16位字符!";
-                button.nextElementSibling.style.color = "red";
+        function addEvent(elem, type, func) {
+            if (elem.addEventListener) {
+                elem.addEventListener(type, func);
+            } else if (elem.attachEvent) {
+                elem.attachEvent("on" + type, func);
             } else {
-                input.style.border = "1px solid green";
-                button.nextElementSibling.innerHTML = "格式正确!";
-                button.nextElementSibling.style.color = "green";
+                elem["on" + type] = func;
             }
-        })
+        }
 
-        //使用Unicode编码来判断是否有中文
-        function chkstrlen(str) {
-            var strlen = 0;
-            for (var i = 0; i < str.length; i++) {
-                if (str.charCodeAt(i) > 255) {
-                    strlen += 2;
-                } else {
-                    strlen++;
+        function $(id) {
+            return document.getElementById(id);
+        }
+        var check = (function() {
+            var nameArr = ["名字不能为空", "名字格式不正确", "名字格式正确"];
+            var passwordArr = ["密码不能为空", "密码格式不正确", "密码正确"];
+            var againArr = ["两次输入的密码不一致", "两次输入密码一致", ];
+            var emailArr = ["邮箱不能为空", "邮箱格式不正确", "邮箱格式正确"];
+            var phoneArr = ["手机号不能为空", "手机格式不正确", "手机格式正确"];
+            var passwordRight = false;
+            var boolean = false;
+
+            return {
+                check_name: function(str) {
+                    str = str.trim();
+                    if (str === "") {
+                        boolean = false;
+                        return [nameArr[0], boolean];
+                    }
+                    str = str.replace(new RegExp('[^\x00-\xff]', 'g'), 'aa').length;
+                    if (str >= 4 && str <= 16) {
+                        boolean = true;
+                        return [nameArr[2], boolean];
+                    } else {
+                        boolean = false;
+                        return [nameArr[1], boolean];
+                    }
+                },
+                check_pasword: function(str) {
+                    if (str === "") {
+                        boolean = false;
+                        return [passwordArr[0], boolean];
+                    }
+                    var reg = new RegExp(/^[a-zA-Z0-9]{6,13}$/);
+                    if (str.match(reg)) {
+                        boolean = true;
+                        return [passwordArr[2], boolean];
+                    } else {
+                        boolean = false;
+                        return [passwordArr[1], boolean];
+                    }
+                },
+                check_againpassword: function(str) {
+                    if (str === "") {
+                        boolean = false;
+                        return [againArr[0], boolean];
+                    }
+                    if (str === password.value) {
+                        boolean = true;
+                        return [againArr[1], boolean];
+                    } else {
+                        boolean = false;
+                        return [againArr[0], boolean];
+                    }
+                },
+                check_email: function(str) {
+
+                    if (str === "") {
+                        boolean = false;
+                        return [emailArr[0], boolean];
+                    }
+                    var reg = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/);
+
+                    if (str.match(reg)) {
+                        boolean = true;
+                        return [emailArr[2], boolean];
+                    } else {
+                        boolean = false;
+                        return [emailArr[1], boolean];
+                    }
+                },
+                check_phone: function(str) {
+                    boolean = false;
+                    if (str === "") {
+                        return [phoneArr[0], boolean];
+                    }
+                    var reg = new RegExp(/^\d{11}/);
+                    if (str.match(reg)) {
+                        boolean = true;
+                        return [phoneArr[2], boolean];
+                    } else {
+                        boolean = false;
+                        return [phoneArr[1], boolean];
+                    }
                 }
             }
-            return strlen;
+        })();
+
+        function FormList(name, type, func, rules, sucess) {
+            this.label = name;
+            this.type = type;
+            this.func = func;
+            this.rules = rules;
+            // this.sucess = sucess;
         }
+        var name_input = new FormList("name", "text", "", "请输入4~18个字符，只允许输入中文、英文、字母和数字，其中中文占2个字符。");
+        var password_input = new FormList("password", "password", "", "请输入6-16个字符或数字");
+        var again_input = new FormList("againpassword", "password", "", "请确认密码");
+        var email_input = new FormList("email", "text", "", "请输入您的邮箱号");
+        var phone_input = new FormList("phone", "text", "", "请输入您的手机号码");
+        var label_obj = {
+            "name": "名称",
+            "password": "密码",
+            "againpassword": "确认密码",
+            "email": "邮箱",
+            "phone": "手机"
+        }
+        window.onload = function() {
+            var str = "";
+            var form = $("form");
+            var forArr = [name_input, password_input, again_input, email_input, phone_input];
+            for (var i = 0; i < forArr.length; i++) {
+                str += toStr(forArr[i]);
+            }
+
+            function toStr(obj) {
+                return '<div><label><strong>' + label_obj[obj.label] + '</strong><input type = ' + obj.type + ' id = ' + obj.label + '><span id = ' + obj.label + 'Warn></span>' + '</label></div>';
+            }
+            form.innerHTML = str;
+            // input的ID
+            var name = $("name");
+            var password = $("password");
+            var againpassword = $("againpassword");
+            var email = $("email");
+            var phone = $("phone");
+
+            //span的ID
+            var nameW = $("nameWarn");
+            var passwordW = $("passwordWarn");
+            var againpasswordW = $("againpasswordWarn");
+            var emailW = $("emailWarn");
+            var phoneW = $("phoneWarn");
+
+            function focusColor(input, text) {
+                input.style.borderColor = "#ccc";
+                text.style.color = "#aaa";
+            }
+
+            function blurColor(input, text, boolean) {
+                if (boolean === true) {
+                    input.style.borderColor = "#5fb844";
+                    text.style.color = "#5fb844";
+                } else {
+                    input.style.borderColor = "#de0011";
+                    text.style.color = "#de0011";
+                }
+
+            }
+
+            name && addEvent(name, "focus", function() {
+                nameW.innerHTML = name_input.rules;
+                focusColor(name, nameW);
+            });
+            name && addEvent(name, "blur", function() {
+                nameW.innerHTML = check.check_name(name.value)[0];
+                var boolean = check.check_name(name.value)[1];
+                blurColor(name, nameW, boolean);
+
+            });
+            password && addEvent(password, "focus", function() {
+                passwordW.innerHTML = password_input.rules;
+                focusColor(password, passwordW);
+            });
+            password && addEvent(password, "blur", function() {
+                passwordW.innerHTML = check.check_pasword(password.value)[0];
+                var boolean = check.check_pasword(password.value)[1];
+                blurColor(password, passwordW, boolean);
+            });
+            againpassword && addEvent(againpassword, "focus", function() {
+                againpasswordW.innerHTML = again_input.rules;
+                focusColor(againpassword, againpasswordW);
+            });
+            againpassword && addEvent(againpassword, "blur", function() {
+                againpasswordW.innerHTML = check.check_againpassword(againpassword.value)[0];
+                var boolean = check.check_againpassword(againpassword.value)[1];
+                blurColor(againpassword, againpasswordW, boolean);
+
+            });
+            email && addEvent(email, "focus", function() {
+                emailW.innerHTML = email_input.rules;
+                focusColor(email, emailW);
+            });
+            email && addEvent(email, "blur", function() {
+                emailW.innerHTML = check.check_email(email.value)[0];
+                var boolean = check.check_email(email.value)[1];
+                blurColor(email, emailW, boolean);
+            });
+            phone && addEvent(phone, "focus", function() {
+                phoneW.innerHTML = phone_input.rules;
+                focusColor(phone, phoneW);
+            });
+            phone && addEvent(phone, "blur", function() {
+                phoneW.innerHTML = check.check_phone(phone.value)[0];
+                boolean = check.check_phone(phone.value)[1];
+                blurColor(phone, phoneW, boolean);
+            });
+
+            // (function() {
+
+            // })
+        }
+
+        // var input = document.getElementsByTagName("input");
+        // var button = document.getElementsByClassName("button")[0];
+        // var p = document.getElementsByTagName("p");
+        // var num = 0;
+
+        // var checkReuslt = {
+        //     right: false,
+        //     content: ""
+        // }
+
+        // for (var i = 0, len = input.length; i < len; i++) {
+        //     input[i].addEventListener("focus", function(e) {
+        //         var p = e.target.parentElement.getElementsByTagName("p")[0];
+        //         p.style.display = "block";
+
+
+        //     })
+        //     input[i].addEventListener("blur", function(e) {
+        //         checked(e.target);
+        //         var p = e.target.parentElement.getElementsByTagName("p")[0];
+        //         p.innerHTML = checkReuslt.content;
+        //         if (checkReuslt.right) {
+        //             p.style.color = "green";
+        //             e.target.style.border = "1px solid green";
+        //             num++;
+        //         } else {
+        //             p.style.color = "red";
+        //             e.target.style.border = "1px solid red";
+        //         }
+        //     })
+        // }
+        // button.addEventListener("click", function() {
+        //     if (num === 5) {
+        //         alert("提交成功！");
+        //     } else {
+        //         alert("提交失败，请检查重新输入！");
+        //     }
+        // })
+
+        // function checked(ele) {
+        //     var text = ele.value.trim();
+        //     if (text.length === 0) {
+        //         checkReuslt.content = "内容不能为空！";
+        //         checkReuslt.right = false;
+        //         return;
+        //     }
+        //     if (ele === input[0]) {
+        //         var str = text.replace(new RegExp('[^\x00-\xff]', 'g'), 'aa').length;
+        //         if (str >= 4 && str <= 16) {
+        //             checkReuslt.content = "格式正确";
+        //             checkReuslt.right = true;
+
+        //         }
+        //     }
+        //     if (ele === input[1]) {
+        //         var reg = new RegExp(/^[a-zA-Z0-9]{6,16}$/);
+        //         if (text.match(reg)) {
+        //             checkReuslt.content = "密码格式正确";
+        //             checkReuslt.right = true;
+        //         } else {
+        //             checkReuslt.content = "密码格式不正确，请重新输入！";
+        //             checkReuslt.right = false;
+        //         }
+
+        //     }
+
+        //     if (ele === input[2]) {
+        //         if (str === input[2].value.trim()) {
+        //             checkReuslt.content = "两次输入的密码正确！";
+        //             checkReuslt.right = true;
+        //         } else {
+        //             checkReuslt.content = "两次输入的密码不一致，请重新输入！";
+        //             checkReuslt.right = false;
+        //         }
+        //     }
+        //     if (ele === input[3]) {
+        //         var reg = new RegExp(/^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+(.[a-zA-Z0-9_-])+/);
+        //         if (text.match(reg)) {
+        //             checkReuslt.content = "邮箱格式正确！";
+        //             checkReuslt.right = true;
+        //         } else {
+        //             checkReuslt.content = "邮箱格式错误！";
+        //             checkReuslt.right = false;
+        //         }
+        //     }
+        //     if (ele === input[4]) {
+        //         var reg = new RegExp(/^\d{11}$/);
+        //         if (text.match(reg)) {
+        //             checkReuslt.content = "手机号格式正确！";
+        //             checkReuslt.right = true;
+        //         } else {
+        //             checkReuslt.content = "手机号格式错误！";
+        //             checkReuslt.right = false;
+        //         }
+        //     }
+
+        // }
     </script>
 </body>
 
