@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+
+    <style>
+        /*点击之后产生变化*/
+
+        #formCreate fieldset:nth-child(n+3) {
+            display: none;
+        }
+        /*根据className来显示变化*/
+
+        #formCreate .input~.text~#lengthControl,
+        #formCreate .input~#ruleInput,
+        #formCreate .input~.password~#lengthControl,
+        #formCreate .select~#boxItem,
+        #formCreate .checked~#boxItem,
+        #formCreate .radio~#boxItem,
+        #formCreate .textarea~#boxItem {
+            display: block;
+        }
+
+        #formCreate {
+            width: 300px;
+            float: left;
+        }
+
+        #formCreate fieldset {
+            margin-top: 20px;
+        }
+
+        #formCreate label {
+            font-size: 14px;
+            display: inline-block;
+            margin-right: 8px;
+            margin-left: 8px;
+        }
+
+        #formCreate #lengthControl input {
+            width: 20%;
+        }
+
+        #formCreate #boxItem #boxItemInput {
+            width: 100%;
+        }
+
+        #formCreate #boxItem #boxItemShow {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin: 20px;
+        }
+
+
+        #btnAdd {
+            height: 30px;
+            width: 80px;
+            border-radius: 5px;
+            background: rgb(59, 153, 252);
+            color: white;
+            border: 0px;
+            margin-top: 30px;
+        }
+        /* 表单展示区 */
+
+        #formBox {
+            border: 1px solid black;
+            margin-left: 320px;
+            border-radius: 5px;
+        }
+
+        #formBox h1 {
+            text-align: center;
+            color: rgb(59, 153, 252);
+        }
+
+        #formBox #result {
+            width: 400px;
+            margin: 20px auto;
+            position: relative;
+        }
+
+
+        #result :first-child[id=submitForm] {
+            display: none;
+        }
+
+        #result .radioBox label:first-child,
+        #result label {
+            display: block;
+            text-align: right;
+            position: absolute;
+            width: 300px;
+            left: -320px;
+            margin-top: 4px;
+        }
+
+        #result .radioBox label {
+            display: inline-block;
+            position: static;
+            width: auto;
+            margin-right: 10px;
+        }
+
+        #result .radioBox input {
+            width: auto;
+            height: auto;
+            text-align: left;
+        }
+
+        #result input {
+            width: 100%;
+            height: 30px;
+            border: 1px solid rgb(199, 199, 199);
+            ;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        #result span {
+            display: block;
+            width: 100%;
+            margin-bottom: 20px;
+            margin-top: 8px;
+            font-size: 14px;
+            color: rgb(199, 199, 199);
+        }
+
+        #result.style2 div {
+            margin-top: 10px;
+            width: 300px;
+            position: relative;
+        }
+
+        #result.style2 span {
+            top: 0;
+            display: block;
+            position: absolute;
+            text-align: left;
+            margin-top: 4px;
+            right: -350px;
+            width: 320px;
+        }
+
+        #result .error {
+            color: red;
+            border-color: red;
+        }
+
+        #result .true {
+            color: rgb(39, 198, 82);
+            border-color: rgb(39, 198, 82);
+        }
+
+        .item {
+            height: 20px;
+            background-color: red;
+            color: #fff;
+            margin: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+        }
+
+        .item>span {
+            transition: width 0.2s linear;
+            display: inline-block;
+            width: 0;
+            height: 16px;
+            overflow: hidden;
+        }
+
+        .item:hover>span {
+            transition: width 0.2s linear;
+            width: 64px;
+            height: 16px;
+        }
+
+        .item:hover {
+            background-color: blue;
+        }
+
+        #formBox #submitForm {
+            background: rgb(59, 153, 252);
+            color: white;
+            height: 30px;
+            width: 80px;
+            border-radius: 5px;
+            border: 0px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <aside id="formSetData">
+        <form action="" id="formCreate">
+            <!-- 类型 -->
+            <fieldset class="input" id="typeBox">
+                <legend>类型</legend>
+                <input type="radio" name="dataType" id="input" checked>
+                <label for="input">输入框</label>
+                <input type="radio" name="dataType" id="radio">
+                <label for="radio">单选框</label>
+                <input type="radio" name="dataType" id="checked">
+                <label for="checked">复选框</label>
+                <input type="radio" name="dataType" id="select">
+                <label for="select">多选框</label>
+                <input type="radio" name="dataType" id="textarea">
+                <label for="textarea">文本域</label>
+            </fieldset>
+            <!-- 配置需要 -->
+            <fieldset class="necessary" id="basicBox">
+                <legend>配置</legend>
+                <label for="dataNeed">名称</label>
+                <input type="text" id="labelBox" value="姓名">
+                <label for="">必填</label>
+                <input type="radio" name="dataNeed" id="necessary" checked>
+                <label for="">选填</label>
+                <input type="radio" name="dataNeed" id="unnecessary">
+                <label for="">样式</label>
+                <select name="" id="selectBox">
+                    <option>样式一</option>
+                    <option>样式二</option>
+                </select>
+            </fieldset>
+            <!-- 规则 -->
+            <fieldset class="text" id="ruleInput">
+                <legend>规则</legend>
+                <input type="radio" name="dataRule" id="text" checked>
+                <label for="text">文字</label>
+                <input type="radio" name="dataRule" id="number">
+                <label for="number">数字</label>
+                <input type="radio" name="dataRule" id="email">
+                <label for="email">邮箱</label>
+                <input type="radio" name="dataRule" id="phone">
+                <label for="phone">电话号码</label>
+                <input type="radio" name="dataRule" id="password">
+                <label for="password">密码</label>
+            </fieldset>
+            <!-- 输入文本框 -->
+            <fieldset id="boxItem">
+                <legend>选项</legend>
+                <input type="text" id="boxItemInput" placeholder="可用空格，回车和逗号来进行分割">
+                <span id="boxItemShow"></span>
+            </fieldset>
+            <!-- 长度控制 -->
+            <fieldset id="lengthControl">
+                <legend>长度控制</legend>
+                <label for="">字符范围</label>
+                <input type="number" name="" id="minLength" value="4">
+                <span>--</span>
+                <input type="number" name="" id="maxLength" value="16">
+            </fieldset>
+            <button type="button" id="btnAdd">添加</button>
+
+        </form>
+    </aside>
+    <div id="formBox">
+        <h1>表单展示区</h1>
+        <form action="" id="result">
+            <button type="button" id="submitForm">提交</button>
+        </form>
+    </div>
+    <script src="showTagModule.js"></script>
+    <script src="formModule.js"></script>
+    <script src="dataProductModule.js"></script>
+    <script src="app.js"></script>
+
+
+</body>
+
+</html>
