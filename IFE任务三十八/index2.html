@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>IFE任务三十八</title>
+    <link rel="stylesheet" href="style2.css">
+</head>
+
+
+<body>
+    <div id="tableCreat1"></div>
+    <div id="tableCreat2"></div>
+    <script src="task2.js"></script>
+    <script>
+        var taleTitle1 = [{
+                label: "姓名",
+                name: "name",
+                sort: false
+            },
+            {
+                label: "语文",
+                name: "chinese",
+                sort: true
+            },
+            {
+                label: "数学",
+                name: "math",
+                sort: true
+            },
+            {
+                label: "英语",
+                name: "english",
+                sort: true
+            },
+            {
+                label: "总分",
+                name: "sum",
+                sort: true
+            }
+        ];
+        var tableData1 = {
+            xiaoZhang: {
+                name: "xiaoZing",
+                chinese: 90,
+                math: 85,
+                english: 90,
+                sum: 260
+            },
+            xiaoMing: {
+                name: "xiaoMing",
+                chinese: 80,
+                math: 90,
+                english: 75,
+                sum: 245
+            },
+            xiaoHong: {
+                name: "xiaoHong",
+                chinese: 75,
+                math: 80,
+                english: 95,
+                sum: 250
+            },
+            xiaoLiang: {
+                name: "xiaoLiang",
+                chinese: 65,
+                math: 75,
+                english: 100,
+                sum: 240
+            }
+
+        }
+        createTable("#tableCreat1", taleTitle1, tableData1);
+        
+    </script>
+    
+</body>
+
+</html>
