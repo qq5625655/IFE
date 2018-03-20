@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ife3.37</title>
+    <style>
+        .text {
+            width: 100%;
+            height: 20px;
+            background: white;
+        }
+
+        .mask {
+            width: 300px;
+            height: 150px;
+            background: red;
+            text-align: center;
+            position: fixed;
+            /*div绝对居中*/
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .cover {
+            position: fixed;
+            top: 0px;
+            left: 0px;
+            width: 100%;
+            height: 980px;
+            background: black;
+            opacity: 0.5;
+        }
+
+        .hide {
+            display: none;
+        }
+
+        .show {
+            display: block;
+        }
+    </style>
+</head>
+
+<body>
+    <button>点击它</button>
+    <div>啊啊啊啊啊啊</div>
+</body>
+<script>
+    (function () {
+        //创建类
+        function Layer(text) {
+            this.text = null;
+            this.mask = null;
+            this.cover = null;
+            this.init();
+        }
+
+        /*
+        构造原型方法
+        */
+        Layer.prototype = {
+            init: function () {
+                var that = this;
+                document.body.addEventListener("click", function (e) {
+                    var text = e.target.innerText;
+                    if (e.target) {
+                        that.create(text);
+                    }
+                    if (e.target.className === "cover show") {
+                        that.hide();
+                    }
+                });
+            },
+            //隐藏Dom节点
+            hide: function () {
+                this.mask.className = "mask hide";
+                this.cover.className = "cover hide";
+            },
+            //创造DOM节点
+            create: function (text) {
+                if (!this.mask) {
+                    //创造3个DOM节点，分别为遮盖层、浮出窗口、文本内容
+                    this.mask = document.createElement("div");
+                    this.cover = document.createElement("div");
+                    this.text = document.createElement("div");
+                    this.text.innerText = text;
+
+                    this.mask.className = "mask";
+                    this.cover.className = "cover show";
+                    this.text.className = "text";
+                    document.body.appendChild(this.cover);
+                    this.mask.appendChild(this.text);
+                    document.body.appendChild(this.mask);
+                } else {
+                    this.text.innerText = text;
+                    this.mask.className = "mask";
+                    this.cover.className = "cover show";
+                }
+            },
+        }
+        var Layer = new Layer();
+    }());
+</script>
+
+</html>
