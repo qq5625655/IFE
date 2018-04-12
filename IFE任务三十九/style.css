@@ -1,0 +1,80 @@
+* {
+    margin: 0px;
+    padding: 0px;
+}
+#CreateTable1 {
+    /* text-align: center; */
+}
+
+#CreateTable1 table {
+    margin: 0 auto;
+    border-collapse: collapse;
+    font-size: 20px;
+    text-align: center;
+    
+}
+
+#CreateTable1 td,th {
+    padding: 10px;
+    border: 1px solid black;
+    width: 124px;
+    /* box-sizing: border-box; */
+}
+#CreateTable1 th {
+    background: black;
+    color: white;
+    border: 1px solid white;
+    
+    /* height: 28px; */
+}
+
+#CreateTable1 .up, #CreateTable1 .down  {
+    width: 0px;
+    height: 0px;
+}
+#CreateTable1 .up {
+    /*transparent 透明的，适用于任何有color的属性值。
+    */
+
+    padding: 0px;
+    position: relative;
+    top: -12px;
+    left: 16px;
+    /* border-left: 5px solid transparent; 
+    border-right: 5px solid transparent; 
+    border-bottom: 10px solid white;  */
+
+    border-width: 0px 5px 7px 5px;
+    border-style: solid;
+    border-color: transparent transparent  white  transparent;
+    background: transparent;
+    
+
+}
+#CreateTable1 .down {
+    position: relative;
+    top:5px;
+    left: 6px;
+    padding: 0px;
+    border-width: 7px 5px 0px 5px;
+    border-style: solid;
+    border-color: white transparent transparent  transparent;
+    background: transparent;
+}
+.tableHead {
+    position: fixed;
+    
+}
+.tableHeadStatic {
+    position: static;
+}
+#CreateTable1 tbody {
+    display: block;
+   
+}
+#CreateTable1 thead {
+    padding: 1px;
+    overflow: hidden;
+    display: block;
+    height: 50px;
+}
