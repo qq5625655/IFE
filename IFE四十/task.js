@@ -1,10 +1,10 @@
 var dateUi = (function () {
-    function createDate(dom) {
+    function CreateDate(dom) {
         this.dom = document.querySelector(dom);
         this.date = new Date();
         this.init();
     }
-    createDate.prototype = {
+    CreateDate.prototype = {
         //创建日历
         init: function () {
             var year = this.date.getFullYear();
@@ -82,6 +82,7 @@ var dateUi = (function () {
                     text += '<span class = "nowDay">' + i + '</span>';
                 }
             }
+            //渲染
             this.dom.innerHTML += text;
             //清空，便于DOM渲染
             text = '';
@@ -119,11 +120,9 @@ var dateUi = (function () {
                     }
                     that.render(year, month, day);
                 }
-
-            }
-            
+            }         
         }
     }
-    return createDate;
+    return CreateDate;
 }());
 new dateUi(".date");
