@@ -145,7 +145,7 @@ var dateUi = (function () {
                     }
                 }
             });
-
+            //按钮监听时间
             btDiv.addEventListener("click", function (e) {
                 var text = '';
                 if (e.target.className === "confirm") {
@@ -157,6 +157,8 @@ var dateUi = (function () {
                     }
                     alert("您选择的是" + text);
                     dateInput.value = text;
+                } else {
+                    that.dom.className = "dateHide";
                 }
             })
         },
