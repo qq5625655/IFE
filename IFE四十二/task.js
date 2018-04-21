@@ -7,15 +7,22 @@ var dateUi = (function () {
         this.max = max;
         this.date = new Date();
         this.init();
+        //渲染的日期
+        this.pDate = "";
+
     }
     //原型方法
     CreateDate.prototype = {
         //创建日历
         init: function () {
-            this.addEvent();
+            var year = this.date.getFullYear();
+            var month = this.date.getMonth();
+            var day = this.date.getDate();
+            this.render(year, month, day);
+            this.addEvent(month, year, day);
         },
         //渲染当前月的表格
-        render: function (year, month, day) {
+        render: function (year, month, day, domArr) {
             //inout渲染
             var dateContainer = document.querySelector(".dateContainer");
             dateContainer.innerHTML = '<label for ="dateInput">请用户选择日期</label>' +
@@ -99,19 +106,19 @@ var dateUi = (function () {
             text += '<div class="btDiv"><button type="button" class = "confirm">确认</button>' +
                 '<button type= "button" class = "cancer">取消</button></div>';
             this.dom.innerHTML += text;
+
+            //判断是否为以前渲染过后的月份，是的话渲染！
+            var renderYear = year + '年' + (month + 1) + '月';
+            if (this.pDate === renderYear) {
+                this.renderSelected(domArr);
+            }
         },
-        addEvent: function () {
-            var year = this.date.getFullYear();
-            var month = this.date.getMonth();
-            var day = this.date.getDate();
-
-            this.render(year, month, day);
-
-            var next = document.getElementById("next");
-            var dateInput = document.querySelector("#dateInput");
-            var btDiv = document.querySelector(".btDiv");
+        //监听事件
+        addEvent: function (month, year, day) {
             var that = this;
             var domArr = [];
+
+            var spans = document.getElementsByTagName("span");
             //Input 监听事件
             this.dom.className = "dateHide";
             dateInput.addEventListener("focus", function () {
@@ -130,7 +137,7 @@ var dateUi = (function () {
                         year = year - 1;
                         month = 11;
                     }
-                    that.render(year, month, day);
+                    that.render(year, month, day, domArr);
                 } else if (e.target.className === "nextNull" || e.target.id === "next") {
                     that.dom.innerHTML = '';
                     month = month + 1;
@@ -138,57 +145,66 @@ var dateUi = (function () {
                         year = year + 1;
                         month = 0;
                     }
-                    that.render(year, month, day);
+                    that.render(year, month, day, domArr);
                 } else {
                     if (e.target.nodeName === "SPAN") {
-                        that.getSeleteDate(e.target, domArr);
+                        that.flow(e.target, domArr);
                     }
                 }
             });
             //按钮监听时间
-            btDiv.addEventListener("click", function (e) {
+            this.dom.addEventListener("click", function (e) {
                 var text = '';
                 if (e.target.className === "confirm") {
                     if (domArr.length > 1) {
-                        text = year + "年" + month + "月" + domArr[0].innerText + "日";
-                        text += "到" + year + "年" + month + "月" + domArr[1].innerText + "日";
+                        text = that.pDate + spans[domArr[0]].innerText + "日" + "到";
+                        text += that.pDate + spans[domArr[1]].innerText + "日";
                     } else {
-                        text = year + "年" + month + "月" + domArr[0].innerText + "日";
+                        text = pDate + spans[domArr[0]].innerText + "日";
                     }
                     alert("您选择的是" + text);
                     dateInput.value = text;
-                } else {
+                    that.dom.className = "dateHide";
+                } else if (e.target.className === "cancer") {
                     that.dom.className = "dateHide";
                 }
-            })
+            });
+            //获取渲染的月份与年份
         },
-        //获得数据位置
-        getSeleteDate: function (e, domArr) {
+        //流程控制
+        flow: function (e, domArr) {
+            var spans = document.getElementsByTagName("span");
             var min, max;
+            var index = this.getSeleteDateIndex(e);
             //判断是否为时间段还是为单个日期
             if (this.mulit) {
                 //判断时间段的流程
                 if (domArr.length < 1) {
-                    e.className = "selected";
-                    domArr.push(e);
+                    domArr.push(index);
+                    this.renderSelected(domArr);
                 } else {
                     if (domArr[1]) {
-                        min = parseInt(domArr[1].innerText);
+                        min = domArr[1];
                     } else {
-                        min = parseInt(domArr[0].innerText);
+                        min = domArr[0];
                     }
-                    max = parseInt(e.innerText);
+                    max = index;
                     var dayNum = Math.abs(min - max);
-                    if (dayNum < this.min || dayNum > this.max) {
+                    if (min === max || dayNum < this.min || dayNum > this.max) {
                         alert("时间不在范围内!");
                     } else {
-                        e.className = "selected";
-                        domArr.push(e);
+                        domArr.push(index);
+                        this.renderSelected(domArr);
                     }
                 }
+                //处理边界信息
                 if (domArr.length > 2) {
-                    domArr[0].className = "nowDay";
-                    domArr.shift();
+                    if (domArr[2] && domArr[0] === domArr[2]) {
+                        domArr.shift();
+                    } else {
+                        spans[domArr[0]].className = "nowDay";
+                        domArr.shift();
+                    }
                 }
             } else {
                 //判断单个时间的流程
@@ -196,42 +212,57 @@ var dateUi = (function () {
                     domArr[0].className = "nowDay";
                     domArr.pop();
                 }
-                e.className = "selected";
-                domArr.push(e);
+                domArr.push(index);
+                this.renderSelected(domArr);
             }
             this.renderSelected(domArr);
+
             // return domArr;
         },
-        //渲染点击的DOM。
+
+        /**
+         * 渲染所选择的日历;
+         * @param {Array} option 用户点击数字的下标
+         */
         renderSelected: function (domArr) {
+            var spans = document.getElementsByTagName("span");
             var minDate = 0;
             var maxDate = 0;
+            for (var i = 0; i < domArr.length; i++) {
+                spans[domArr[i]].className = "selected";
+            }
             //总结call的方法用法;
-            var spans = document.getElementsByTagName("span");
             //清空之前的渲染
             for (var i = 0; i < spans.length; i++) {
                 if (spans[i].className === "selectedDay") {
                     spans[i].className = "nowDay";
                 }
             }
-            minDate = [].indexOf.call(spans, domArr[0]);
-            maxDate = [].indexOf.call(spans, domArr[1]);
-
+            // if (spans[minDate] !== domArr[0]) {
+            minDate = domArr[0];
+            maxDate = domArr[1];
+            // }
             //判断dom节点谁大谁小，并且交换。
             if (minDate > maxDate && maxDate !== -1) {
                 var t = minDate;
                 minDate = maxDate;
                 maxDate = t;
-                domArr = [];
-                domArr.push(spans[minDate]);
-                domArr.push(spans[maxDate]);
             }
             //不渲染选择dom节点自身
+
             minDate = minDate + 1;
             //渲染所选中dom节点之间的元素;
             for (var i = minDate; i < maxDate; i++) {
                 spans[i].className = "selectedDay";
             }
+            this.pDate = this.dom.getElementsByTagName("p")[0].innerText;
+            this.pDate = this.pDate.slice(1, this.pDate.length - 1);
+        },
+        getSeleteDateIndex: function (e) {
+            var spans = document.getElementsByTagName("span");
+            var index = 0;
+            index = [].indexOf.call(spans, e);
+            return index;
         },
         value: function () {
             var date = dateInput.value;
